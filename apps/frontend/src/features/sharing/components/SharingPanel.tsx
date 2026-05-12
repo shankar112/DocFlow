@@ -3,11 +3,11 @@ import { api } from '../../../services/api';
 import { UserPlus, Check, X } from 'lucide-react';
 
 interface SharingPanelProps {
-  documentId: number;
-  onClose: () => void;
+  documentId?: number;
+  onClose?: () => void;
 }
 
-export function SharingPanel({ documentId, onClose }: SharingPanelProps) {
+export function SharingPanel({ documentId = 0, onClose = () => {} }: SharingPanelProps) {
   const [username, setUsername] = useState('');
   const [sharing, setSharing] = useState(false);
   const [success, setSuccess] = useState(false);

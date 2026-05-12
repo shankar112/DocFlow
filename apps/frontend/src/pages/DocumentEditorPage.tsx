@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { api } from '../services/api';
 import { DocumentEditor } from '../features/document-editor/components/DocumentEditor';
@@ -8,7 +8,6 @@ import { ArrowLeft, Save, Share2, Trash2, Download } from 'lucide-react';
 export function DocumentEditorPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [doc, setDoc] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -19,7 +18,6 @@ export function DocumentEditorPage() {
     if (id) {
       api.get(`/documents/${id}`)
         .then((data) => {
-          setDoc(data);
           setTitle(data.title);
           setContent(data.content);
           setLoading(false);

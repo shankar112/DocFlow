@@ -1,6 +1,6 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { Bold, Italic, List, ListOrdered, Heading1, Heading2, Underline as UnderlineIcon } from 'lucide-react'
+import { Bold, Italic, List, ListOrdered, Heading1, Heading2 } from 'lucide-react'
 
 interface DocumentEditorProps {
   content: string;
