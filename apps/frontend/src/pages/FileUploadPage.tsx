@@ -1,14 +1,16 @@
-import { PageHeader } from '../components/ui/PageHeader'
-import { FileUploadDropzone } from '../features/file-upload/components/FileUploadDropzone'
+import { FileUploadDropzone } from '../features/file-upload/components/FileUploadDropzone';
 
 export function FileUploadPage() {
   return (
-    <>
-      <PageHeader
-        title="File upload"
-        description="A simple upload surface ready for validation, progress, and backend integration."
-      />
+    <div className="mx-auto max-w-2xl space-y-8">
+      <div>
+        <h2 className="text-2xl font-bold text-slate-900">Upload Documents</h2>
+        <p className="mt-2 text-slate-600">
+          Import your local .txt or .md files into DocFlow.
+        </p>
+      </div>
+
       <FileUploadDropzone />
-    </>
-  )
+    </div>
+  );
 }
