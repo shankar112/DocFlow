@@ -18,7 +18,11 @@ app = FastAPI(title="DocFlow API", description="Lightweight Collaborative Docume
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://doc-flow-seqx.vercel.app",
+        "https://doc-flow.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,14 +1,20 @@
 // Determine API URL based on the current hostname (runtime check)
 const getApiUrl = () => {
-  // If running on Vercel (production), use Render backend
-  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-    return 'https://docflow-hwdr.onrender.com/api';
+  // Check if an environment variable is provided (Vite standard)
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
   }
-  // For local development, use localhost
+  
+  // Fallback for Vercel production
+  if (typeof window !== 'undefined' && (window.location.hostname.includes('vercel.app') || window.location.hostname.includes('doc-flow'))) {
+    return 'https://docflow-kwdr.onrender.com/api';
+  }
+  
+  // Local development
   return 'http://localhost:8000/api';
 };
 
-const API_URL = getApiUrl();
+export const API_URL = getApiUrl();
 
 const getHeaders = () => {
   const token = localStorage.getItem('token');

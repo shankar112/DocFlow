@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { API_URL } from '../services/api';
 
 export function LoginPage() {
   const [username, setUsername] = useState('user1');
@@ -16,7 +17,7 @@ export function LoginPage() {
       formData.append('username', username);
       formData.append('password', password);
       
-      const response = await fetch('http://localhost:8000/api/auth/login', {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         body: formData,
       });
