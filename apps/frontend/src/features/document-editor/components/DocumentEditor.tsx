@@ -7,6 +7,23 @@ interface DocumentEditorProps {
   onChange: (content: string) => void;
 }
 
+interface MenuButtonProps {
+  onClick: () => void;
+  isActive: boolean;
+  children: React.ReactNode;
+}
+
+const MenuButton = ({ onClick, isActive, children }: MenuButtonProps) => (
+  <button
+    onClick={onClick}
+    className={`rounded p-1.5 transition ${
+      isActive ? 'bg-sky-100 text-sky-700' : 'text-slate-600 hover:bg-slate-100'
+    }`}
+  >
+    {children}
+  </button>
+);
+
 export function DocumentEditor({ content, onChange }: DocumentEditorProps) {
   const editor = useEditor({
     extensions: [StarterKit],
@@ -17,17 +34,6 @@ export function DocumentEditor({ content, onChange }: DocumentEditorProps) {
   });
 
   if (!editor) return null;
-
-  const MenuButton = ({ onClick, isActive, children }: any) => (
-    <button
-      onClick={onClick}
-      className={`rounded p-1.5 transition ${
-        isActive ? 'bg-sky-100 text-sky-700' : 'text-slate-600 hover:bg-slate-100'
-      }`}
-    >
-      {children}
-    </button>
-  );
 
   return (
     <div className="flex flex-col rounded-lg border border-slate-200 bg-white shadow-sm">

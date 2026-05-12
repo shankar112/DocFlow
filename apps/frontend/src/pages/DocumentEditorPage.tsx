@@ -36,7 +36,7 @@ export function DocumentEditorPage() {
     setSaving(true);
     try {
       await api.put(`/documents/${id}`, { title, content });
-    } catch (err) {
+    } catch {
       alert('Failed to save document');
     } finally {
       setSaving(false);
@@ -63,7 +63,7 @@ export function DocumentEditorPage() {
     try {
       await api.delete(`/documents/${id}`);
       navigate('/');
-    } catch (err) {
+    } catch {
       alert('Failed to delete document. You might not be the owner.');
     }
   };

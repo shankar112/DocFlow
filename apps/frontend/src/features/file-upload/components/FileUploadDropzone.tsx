@@ -20,7 +20,7 @@ export function FileUploadDropzone() {
     try {
       const doc = await api.upload('/documents/upload', file);
       navigate(`/editor/${doc.id}`);
-    } catch (err) {
+    } catch {
       setError('Failed to upload file.');
     } finally {
       setUploading(false);

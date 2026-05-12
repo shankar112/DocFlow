@@ -39,7 +39,7 @@ export function DashboardPage() {
     try {
       const newDoc = await api.post('/documents/', { title: finalTitle, content: '' });
       navigate(`/editor/${newDoc.id}`);
-    } catch (err) {
+    } catch {
       alert('Failed to create document');
     }
   };

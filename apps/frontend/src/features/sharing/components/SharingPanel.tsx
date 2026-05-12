@@ -27,7 +27,7 @@ export function SharingPanel({ documentId = 0, onClose = () => {} }: SharingPane
       await api.post(`/documents/${documentId}/share`, { username });
       setSuccess(true);
       setUsername('');
-    } catch (err) {
+    } catch {
       setError('User not found or sharing failed.');
     } finally {
       setSharing(false);
