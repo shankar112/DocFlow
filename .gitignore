@@ -52,6 +52,9 @@ instance/
 .env.local
 .env.*.local
 
+# Databases
+*.db
+
 # Uploads (optional, adjust based on your needs)
 uploads/
 !.gitkeep
