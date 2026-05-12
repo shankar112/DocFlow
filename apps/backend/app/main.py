@@ -29,5 +29,6 @@ app.include_router(auth_routes.router)
 app.include_router(document_routes.router)
 
 @app.get("/")
+@app.head("/")
 def root():
     return {"message": "Welcome to DocFlow API"}
