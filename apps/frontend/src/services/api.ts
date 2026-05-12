@@ -1,18 +1,10 @@
-// Determine API URL based on environment
-// For production (Vercel), use the Render backend URL
-// For development, use localhost
+// Determine API URL based on the current hostname (runtime check)
 const getApiUrl = () => {
-  // Check if VITE_API_URL is set (from .env files or Vercel env vars)
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-  
-  // For production builds without env var, use Render backend
-  if (import.meta.env.PROD) {
+  // If running on Vercel (production), use Render backend
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
     return 'https://docflow-hwdr.onrender.com/api';
   }
-  
-  // For development, use localhost
+  // For local development, use localhost
   return 'http://localhost:8000/api';
 };
 
