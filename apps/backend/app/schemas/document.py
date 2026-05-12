@@ -3,8 +3,8 @@ from datetime import datetime
 from typing import List, Optional
 
 class ShareBase(BaseModel):
-    recipient_email: str
-    permission: str
+    user_id: int
+    permission: str = "edit"
 
 class ShareCreate(ShareBase):
     pass
@@ -17,7 +17,7 @@ class Share(ShareBase):
 
 class DocumentBase(BaseModel):
     title: str
-    content: str
+    content: Optional[str] = ""
 
 class DocumentCreate(DocumentBase):
     pass
@@ -28,6 +28,7 @@ class DocumentUpdate(BaseModel):
 
 class Document(DocumentBase):
     id: int
+    owner_id: int
     created_at: datetime
     updated_at: datetime
     shares: List[Share] = []

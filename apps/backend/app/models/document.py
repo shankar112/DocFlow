@@ -9,9 +9,11 @@ class Document(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     content = Column(Text, default="")
+    owner_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    owner = relationship("User", back_populates="documents")
     shares = relationship("Share", back_populates="document", cascade="all, delete-orphan")
 
 class Share(Base):
@@ -19,7 +21,8 @@ class Share(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     document_id = Column(Integer, ForeignKey("documents.id"))
-    recipient_email = Column(String, index=True)
-    permission = Column(String)  # 'read' or 'edit'
+    user_id = Column(Integer, ForeignKey("users.id"))  # Recipient
+    permission = Column(String, default="edit")
 
     document = relationship("Document", back_populates="shares")
+    recipient = relationship("User", back_populates="received_shares")

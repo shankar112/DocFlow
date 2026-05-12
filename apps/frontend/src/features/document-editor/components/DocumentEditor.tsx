@@ -1,34 +1,80 @@
-import { useState } from 'react'
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import { Bold, Italic, List, ListOrdered, Heading1, Heading2, Underline as UnderlineIcon } from 'lucide-react'
 
-const initialContent =
-  'Start drafting the document here. The editor feature can grow into rich text, autosave, comments, and version history.'
+interface DocumentEditorProps {
+  content: string;
+  onChange: (content: string) => void;
+}
 
-export function DocumentEditor() {
-  const [title, setTitle] = useState('Patient intake summary')
-  const [content, setContent] = useState(initialContent)
+export function DocumentEditor({ content, onChange }: DocumentEditorProps) {
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML());
+    },
+  });
+
+  if (!editor) return null;
+
+  const MenuButton = ({ onClick, isActive, children }: any) => (
+    <button
+      onClick={onClick}
+      className={`rounded p-1.5 transition ${
+        isActive ? 'bg-sky-100 text-sky-700' : 'text-slate-600 hover:bg-slate-100'
+      }`}
+    >
+      {children}
+    </button>
+  );
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="grid gap-4">
-        <label className="grid gap-2">
-          <span className="text-sm font-medium text-slate-700">Document title</span>
-          <input
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            className="rounded-md border border-slate-300 px-3 py-2 text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-          />
-        </label>
-
-        <label className="grid gap-2">
-          <span className="text-sm font-medium text-slate-700">Content</span>
-          <textarea
-            value={content}
-            onChange={(event) => setContent(event.target.value)}
-            rows={12}
-            className="resize-y rounded-md border border-slate-300 px-3 py-2 text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-          />
-        </label>
+    <div className="flex flex-col rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 p-2">
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          isActive={editor.isActive('bold')}
+        >
+          <Bold size={18} />
+        </MenuButton>
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          isActive={editor.isActive('italic')}
+        >
+          <Italic size={18} />
+        </MenuButton>
+        <div className="mx-1 h-6 w-px bg-slate-200" />
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          isActive={editor.isActive('heading', { level: 1 })}
+        >
+          <Heading1 size={18} />
+        </MenuButton>
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          isActive={editor.isActive('heading', { level: 2 })}
+        >
+          <Heading2 size={18} />
+        </MenuButton>
+        <div className="mx-1 h-6 w-px bg-slate-200" />
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          isActive={editor.isActive('bulletList')}
+        >
+          <List size={18} />
+        </MenuButton>
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          isActive={editor.isActive('orderedList')}
+        >
+          <ListOrdered size={18} />
+        </MenuButton>
       </div>
-    </section>
-  )
+
+      <div className="prose prose-slate max-w-none p-6 focus:outline-none min-h-[400px]">
+        <EditorContent editor={editor} />
+      </div>
+    </div>
+  );
 }
