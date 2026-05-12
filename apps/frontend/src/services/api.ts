@@ -1,5 +1,22 @@
-// Use environment variable for API URL, fallback to localhost for development
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+// Determine API URL based on environment
+// For production (Vercel), use the Render backend URL
+// For development, use localhost
+const getApiUrl = () => {
+  // Check if VITE_API_URL is set (from .env files or Vercel env vars)
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // For production builds without env var, use Render backend
+  if (import.meta.env.PROD) {
+    return 'https://docflow-hwdr.onrender.com/api';
+  }
+  
+  // For development, use localhost
+  return 'http://localhost:8000/api';
+};
+
+const API_URL = getApiUrl();
 
 const getHeaders = () => {
   const token = localStorage.getItem('token');
